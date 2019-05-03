@@ -227,6 +227,13 @@ public class RNAppAuthModule extends ReactContextBaseJavaModule implements Activ
                 promise.reject("Failed to authenticate", exception.errorDescription);
                 return;
             }
+            
+            if (response.authorizationCode == null) {
+                // LOGOUT FROM BROWSER
+                // TODO: can we extract it to separate requestCode or method?
+                promise.resolve(true);
+                return;
+            }
 
             final Promise authorizePromise = this.promise;
             final AppAuthConfiguration configuration = createAppAuthConfiguration(
